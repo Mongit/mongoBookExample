@@ -1,7 +1,10 @@
 var express = require('express');
-var router = express.Router();
 var mongoose = require('mongoose');
-var emailFactory = require('./../schemas/email');
+var emailFactory = require('./../schemas/ch9/email');
+var numberFactory = require('./../schemas/ch9/number');
+var weekdayFactory = require('./../schemas/ch9/string');
+
+var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -34,7 +37,7 @@ router.delete('/:id', function(req, res, next) {
 });
 
 
-/*
+//Numbers
 router.get('/number', function(req, res, next) {
     var Number = mongoose.model('Number');
     
@@ -52,5 +55,25 @@ router.post('/number', function(req, res, next) {
         res.json({success: true});
     });
 });
-*/
+
+
+//String
+router.get('/string', function(req, res, next) {
+    var Weekdays = mongoose.model('Weekdays');
+    
+    Weekdays.find(function(err, weekdays) {
+        if(err) return next(err);
+        res.json(weekdays);
+    });
+});
+
+router.post('/string', function(req, res, next) {
+    var weekday = weekdayFactory({ day: req.body.day});
+    
+    weekday.save(function (err,data) {
+        if(err) return next(err);
+        res.json({success: true});
+    });
+});
+
 module.exports = router;

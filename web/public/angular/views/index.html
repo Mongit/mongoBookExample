@@ -1,11 +1,23 @@
-<h1>Todos emails</h1>
+<h1>Validators</h1>
 
 <div ng-controller="IndexController as ctrl">
+    <h3>Basic Validator</h3>
     <li ng-repeat="oneEmail in ctrl.emails">
         {{oneEmail.email}}
         <a href="#" ng-click="ctrl.delete(oneEmail._id)">Borrar</a>
     </li>
+    <h3>Number Validator</h3>
+    <li ng-repeat="num in ctrl.number">
+        {{num.age}}
+        <a href="#" ng-click="ctrl.delete(num._id)">Borrar</a>
+    </li>
+    <h3>String Validator</h3>
+    <li ng-repeat="str in ctrl.string">
+        {{str.day}}
+        <a href="#" ng-click="ctrl.delete(str._id)">Borrar</a>
+    </li>
 </div>
 
-<a ng-href="#/email">Email</a>
-<a ng-href="#/">Index</a>
+<a ng-href="#/email">Basic</a>
+<a ng-href="#/number">Number</a>
+<a ng-href="#/string">String</a>

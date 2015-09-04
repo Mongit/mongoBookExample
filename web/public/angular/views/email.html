@@ -1,4 +1,16 @@
+<h1>Basic Validator</h1>
+<p>
+    The unique: true part is a type of validation that Mongoose passes directly
+    through to MongoDB.
+</p>
+<p>
+    There is one validator that can be used by any SchemaType, named required. This
+    will return a validation error if no data is given to a data object with this property.
+</p>
+
 <form ng-submit="ctrl.save()" ng-controller="EmailController as ctrl" novalidate>
     Email: <input type="email" ng-model="ctrl.email"/>
     <input type="submit" id="submit" value="Guardar"/>
 </form>
+
+<a ng-href="#/">Index</a>

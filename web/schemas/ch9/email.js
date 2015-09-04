@@ -13,9 +13,3 @@ var Email = mongoose.model('Email', emailSchema);
 module.exports = function(config) {
     return new Email(config);
 };
-
-
-//return a validation error if you try to save an instance of teenSchema with an age value of less than 13 , or higher than 19 .
-var tenSchema = mongoose.Schema({
-    age: {type: Number, min: 13, max: 19}
-});

@@ -1,0 +1,11 @@
+<h1>Number validators min, max:</h1>
+<p>
+    Return a validation error if you try to save an instance of teenSchema with an age value of less than 13 , or higher than 19.
+</p>
+
+<form ng-submit="ctrl.save()" ng-controller="NumberController as ctrl" novalidate>
+    Age: <input type="number" ng-model="ctrl.age"/>
+    <input type="submit" id="submit" value="Guardar"/>
+</form>
+
+<a ng-href="#/">Index</a>

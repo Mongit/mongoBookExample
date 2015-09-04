@@ -1,0 +1,14 @@
+<h1>String validators match, enum:</h1>
+<p>
+    match: This validator is for matching against a regular expression
+</p>
+<p>
+    enum: This validator is for checking against a provided list of possible values
+</p>
+
+<form ng-submit="ctrl.save()" ng-controller="StringController as ctrl" novalidate>
+    Weekday: <input type="String" ng-model="ctrl.day"/>
+    <input type="submit" id="submit" value="Guardar"/>
+</form>
+
+<a ng-href="#/">Index</a>
