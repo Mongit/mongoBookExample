@@ -1,0 +1,11 @@
+<h1>Todos emails</h1>
+
+<div ng-controller="IndexController as ctrl">
+    <li ng-repeat="oneEmail in ctrl.emails">
+        {{oneEmail.email}}
+        <a href="#" ng-click="ctrl.delete(oneEmail._id)">Borrar</a>
+    </li>
+</div>
+
+<a ng-href="#/email">Email</a>
+<a ng-href="#/">Index</a>
