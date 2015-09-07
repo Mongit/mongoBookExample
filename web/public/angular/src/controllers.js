@@ -6,6 +6,7 @@
         ctrl.emails = [];
         ctrl.number = [];
         ctrl.string = [];
+        ctrl.errores = [];
         
         $http.get('/api/chapter/'). success(function(data) {
             ctrl.emails = data;
@@ -19,6 +20,12 @@
         });
         $http.get('/api/chapter/string'). success(function(data) {
             ctrl.string = data;
+        }).error(function(data, status, headers, config) {
+            console.log('%s %s %s', config.method, config.url, status);
+        });
+        $http.get('/api/chapter/error'). success(function(data) {
+            console.log(data);
+            ctrl.errores = data;
         }).error(function(data, status, headers, config) {
             console.log('%s %s %s', config.method, config.url, status);
         });

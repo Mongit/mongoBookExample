@@ -72,7 +72,12 @@ router.post('/string', function(req, res, next) {
     var weekday = weekdayFactory({ day: req.body.day});
     
     weekday.save(function (err,data) {
-        if(err) return next(err);
+        if(err){
+            Object.keys(err.errors).forEach(function(key) {
+                var message = err.errors[key].message;
+                console.log('Validation error for "%s": %s', key, message);
+            });
+        }
         res.json({success: true});
     });
 });

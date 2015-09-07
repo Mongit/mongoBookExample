@@ -16,6 +16,11 @@
         {{str.day}}
         <a href="#" ng-click="ctrl.delete(str._id)">Borrar</a>
     </li>
+    <h3>Error Validator</h3>
+    <li ng-repeat="err in ctrl.errores">
+        {{err.name}} - {{err.email}}
+        <a href="#" ng-click="ctrl.delete(err._id)">Borrar</a>
+    </li>
 </div>
 
 <a ng-href="#/email">Basic</a>
