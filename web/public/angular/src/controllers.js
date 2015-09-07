@@ -102,3 +102,26 @@
         
     }]);
 })();
+
+(function() {
+    var app = angular.module('app');
+    
+    app.controller('ErrorController', ['$http', '$location', function($http, $location) {
+        var ctrl = this;
+        ctrl.name = '';
+        ctrl.email = '';
+        
+        ctrl.save = function(){
+            $http({
+                url: '/api/chapter/error',
+                method: "POST",
+                data: ctrl,
+            }).success(function(data, status, headers, config) {
+                $location.path('/');
+            }).error(function(data, status, headers, config) {
+                console.log('%s %s %s', config.method, config.url, status);
+            });
+        }
+        
+    }]);
+})();

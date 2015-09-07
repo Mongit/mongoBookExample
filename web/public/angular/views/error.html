@@ -1,0 +1,9 @@
+<h1>Error validator</h1>
+<p>It is in the err object that we receive the Mongoose validation errors. The error object will contain a top-level message and name, and a collection of specific errors. Each of these errors give an individual message , name , path , and type object.</p>
+<form ng-submit="ctrl.save()" ng-controller="ErrorController as ctrl" novalidate>
+    name: <input type="text" ng-model="ctrl.name"/>
+    email: <input type="email" ng-model="ctrl.email"/>
+    <input type="submit" id="submit" value="Guardar"/>
+</form>
+
+<a ng-href="#/">Index</a>

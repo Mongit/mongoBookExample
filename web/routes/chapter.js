@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var emailFactory = require('./../schemas/ch9/email');
 var numberFactory = require('./../schemas/ch9/number');
 var weekdayFactory = require('./../schemas/ch9/string');
+var errorFactory = require('./../schemas/ch9/error');
 
 var router = express.Router();
 
@@ -72,6 +73,31 @@ router.post('/string', function(req, res, next) {
     
     weekday.save(function (err,data) {
         if(err) return next(err);
+        res.json({success: true});
+    });
+});
+
+//Errors, los errores los imprime en la consola al no poner nombre ni email.
+router.get('/error', function(req, res, next) {
+    var User = mongoose.model('User');
+    
+    User.find(function(err, users) {
+        if(err) return next(err);
+        res.json(users);
+    });
+});
+
+router.post('/error', function(req, res, next) {
+    var error = errorFactory({ name: req.body.name, email: req.body.email});
+    
+    error.save(function (err,data) {
+       // if(err) return next(err);
+        if(err){
+            Object.keys(err.errors).forEach(function(key) {
+                var message = err.errors[key].message;
+                console.log('Validation error for "%s": %s', key, message);
+            });
+        }
         res.json({success: true});
     });
 });
