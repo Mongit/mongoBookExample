@@ -4,6 +4,7 @@ var emailFactory = require('./../schemas/ch9/email');
 var numberFactory = require('./../schemas/ch9/number');
 var weekdayFactory = require('./../schemas/ch9/string');
 var errorFactory = require('./../schemas/ch9/error');
+var asynchFactory = require('./../schemas/ch9/asynch');
 
 var router = express.Router();
 
@@ -134,5 +135,37 @@ router.delete('/error/:id', function(req, res, next) {
     }); 
 });
 
+//Non-blocking, asynchronous validaton
+router.get('/asynch', function(req, res, next) {
+    var Asynch = mongoose.model('Username');
+    
+    Asynch.find(function(err, users) {
+        if(err) return next(err);
+        res.json(users);
+    });
+});
+
+router.post('/asynch', function(req, res, next) {
+    var asynch = asynchFactory({ username: req.body.username });
+    
+    asynch.save(function (err,data) {
+        if(err) {
+            Object.keys(err.errors).forEach(function(key) {
+                var message = err.errors[key].message;
+                console.log('Validation error for "%s": %s', key, message);
+            });
+        }
+        res.json({success: true});
+    });
+});
+
+router.delete('/asynch/:id', function(req, res, next) {
+    var Asynch = mongoose.model('Username');
+    
+    Asynch.findByIdAndRemove(req.params.id, function(err, email) {
+        if(err) return next(err);
+        res.json({success:true});
+    }); 
+});
 
 module.exports = router;

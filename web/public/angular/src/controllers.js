@@ -7,6 +7,7 @@
         ctrl.number = [];
         ctrl.string = [];
         ctrl.errores = [];
+        ctrl.usernames = [];
         
         $http.get('/api/chapter/'). success(function(data) {
             ctrl.emails = data;
@@ -25,6 +26,11 @@
         });
         $http.get('/api/chapter/error'). success(function(data) {
             ctrl.errores = data;
+        }).error(function(data, status, headers, config) {
+            console.log('%s %s %s', config.method, config.url, status);
+        });
+        $http.get('/api/chapter/asynch'). success(function(data) {
+            ctrl.usernames = data;
         }).error(function(data, status, headers, config) {
             console.log('%s %s %s', config.method, config.url, status);
         });
@@ -120,6 +126,28 @@
         ctrl.save = function(){
             $http({
                 url: '/api/chapter/error',
+                method: "POST",
+                data: ctrl,
+            }).success(function(data, status, headers, config) {
+                $location.path('/');
+            }).error(function(data, status, headers, config) {
+                console.log('%s %s %s', config.method, config.url, status);
+            });
+        }
+        
+    }]);
+})();
+
+(function() {
+    var app = angular.module('app');
+    
+    app.controller('AsynchController', ['$http', '$location', function($http, $location) {
+        var ctrl = this;
+        ctrl.username = '';
+        
+        ctrl.save = function(){
+            $http({
+                url: '/api/chapter/asynch',
                 method: "POST",
                 data: ctrl,
             }).success(function(data, status, headers, config) {

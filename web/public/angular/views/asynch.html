@@ -1,0 +1,13 @@
+<h1>Non-blocking, asynchronous validation</h1>
+<p>
+    Runs an asynchronous operation(validator) to check against a database. To use this you specify a validator function with a second parameter—this second parameter is a callback function that expects either true or false.
+In the following example, we are using respond as our callback function, and
+checking to see whether a user record with the supplied username already exists.
+</p>
+
+<form ng-submit="ctrl.save()" ng-controller="AsynchController as ctrl" novalidate>
+    Username: <input type="text" ng-model="ctrl.username"/>
+    <input type="submit" id="submit" value="Guardar"/>
+</form>
+
+<a ng-href="#/">Index</a>

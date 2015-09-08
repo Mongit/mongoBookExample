@@ -7,6 +7,7 @@
         $router.when("/number", { templateUrl: "angular/views/number.html" })
         $router.when("/string", { templateUrl: "angular/views/string.html" })
         $router.when("/error", { templateUrl: "angular/views/error.html" })
+        $router.when("/asynch", { templateUrl: "angular/views/asynch.html" })
         .otherwise({ redirectTo: "/" });
     
     }]);

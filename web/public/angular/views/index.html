@@ -21,9 +21,15 @@
         {{err.name}} - {{err.email}}
         <a href="#" ng-click="ctrl.delete('error/', err._id)">Borrar</a>
     </li>
+    <h3>Asynch Validator</h3>
+    <li ng-repeat="username in ctrl.usernames">
+        {{username.username}}
+        <a href="#" ng-click="ctrl.delete('asynch/', username._id)">Borrar</a>
+    </li>
 </div>
 
 <a ng-href="#/email">Basic</a>
 <a ng-href="#/number">Number</a>
 <a ng-href="#/string">String</a>
 <a ng-href="#/error">Error</a>
+<a ng-href="#/asynch">Asynch</a>
