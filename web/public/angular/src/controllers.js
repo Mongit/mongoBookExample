@@ -24,15 +24,14 @@
             console.log('%s %s %s', config.method, config.url, status);
         });
         $http.get('/api/chapter/error'). success(function(data) {
-            console.log(data);
             ctrl.errores = data;
         }).error(function(data, status, headers, config) {
             console.log('%s %s %s', config.method, config.url, status);
         });
         
-        ctrl.delete = function(id) {
+        ctrl.delete = function(path, id) {
             $http({
-                url: '/api/chapter/' + id,
+                url: '/api/chapter/' + path + id,
                 method: "DELETE",
             }).success(function (data, status, headers, config) {
                 $location.path('/');

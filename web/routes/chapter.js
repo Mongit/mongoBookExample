@@ -57,6 +57,15 @@ router.post('/number', function(req, res, next) {
     });
 });
 
+router.delete('/number/:id', function(req, res, next) {
+    var Number = mongoose.model('Number');
+    
+    Number.findByIdAndRemove(req.params.id, function(err, email) {
+        if(err) return next(err);
+        res.json({success:true});
+    }); 
+});
+
 
 //String
 router.get('/string', function(req, res, next) {
@@ -82,9 +91,19 @@ router.post('/string', function(req, res, next) {
     });
 });
 
+router.delete('/string/:id', function(req, res, next) {
+    var Weekdays = mongoose.model('Weekdays');
+    
+    Weekdays.findByIdAndRemove(req.params.id, function(err, email) {
+        if(err) return next(err);
+        res.json({success:true});
+    }); 
+});
+
+
 //Errors, los errores los imprime en la consola al no poner nombre ni email.
 router.get('/error', function(req, res, next) {
-    var User = mongoose.model('User');
+    var User = mongoose.model('User2');
     
     User.find(function(err, users) {
         if(err) return next(err);
@@ -96,7 +115,6 @@ router.post('/error', function(req, res, next) {
     var error = errorFactory({ name: req.body.name, email: req.body.email});
     
     error.save(function (err,data) {
-       // if(err) return next(err);
         if(err){
             Object.keys(err.errors).forEach(function(key) {
                 var message = err.errors[key].message;
@@ -106,5 +124,15 @@ router.post('/error', function(req, res, next) {
         res.json({success: true});
     });
 });
+
+router.delete('/error/:id', function(req, res, next) {
+    var User = mongoose.model('User2');
+    
+    User.findByIdAndRemove(req.params.id, function(err, email) {
+        if(err) return next(err);
+        res.json({success:true});
+    }); 
+});
+
 
 module.exports = router;
