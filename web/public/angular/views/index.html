@@ -26,6 +26,11 @@
         {{username.username}}
         <a href="#" ng-click="ctrl.delete('asynch/', username._id)">Borrar</a>
     </li>
+    <h3>Final Example Validaton</h3>
+    <li ng-repeat="example in ctrl.examples">
+        {{example.name}} - {{example.email}}
+        <a href="#" ng-click="ctrl.delete('example/', example._id)">Borrar</a>
+    </li>
 </div>
 
 <a ng-href="#/email">Basic</a>
@@ -33,3 +38,4 @@
 <a ng-href="#/string">String</a>
 <a ng-href="#/error">Error</a>
 <a ng-href="#/asynch">Asynch</a>
+<a ng-href="#/ch9/example">FinalExample</a>

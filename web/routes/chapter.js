@@ -5,6 +5,7 @@ var numberFactory = require('./../schemas/ch9/number');
 var weekdayFactory = require('./../schemas/ch9/string');
 var errorFactory = require('./../schemas/ch9/error');
 var asynchFactory = require('./../schemas/ch9/asynch');
+var ExampleFactory = require('./../schemas/ch9/finalExample');
 
 var router = express.Router();
 
@@ -163,6 +164,40 @@ router.delete('/asynch/:id', function(req, res, next) {
     var Asynch = mongoose.model('Username');
     
     Asynch.findByIdAndRemove(req.params.id, function(err, email) {
+        if(err) return next(err);
+        res.json({success:true});
+    }); 
+});
+
+//FINAL EXAMPLE
+router.get('/example', function(req, res, next) {
+    var Example = mongoose.model('Example');
+    
+    Example.find(function(err, users) {
+        if(err) return next(err);
+        res.json(users);
+    });
+});
+
+router.post('/example', function(req, res, next) {
+    var example = ExampleFactory({ name: req.body.name,
+                                 email: req.body.email});
+    
+    example.save(function (err,data) {
+        if(err) {
+            Object.keys(err.errors).forEach(function(key) {
+                var message = err.errors[key].message;
+                console.log('Validation error for "%s": %s', key, message);
+            });
+        }
+        res.json({success: true});
+    });
+});
+
+router.delete('/example/:id', function(req, res, next) {
+    var Example = mongoose.model('Example');
+    
+    Example.findByIdAndRemove(req.params.id, function(err, email) {
         if(err) return next(err);
         res.json({success:true});
     }); 
