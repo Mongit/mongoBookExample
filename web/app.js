@@ -9,6 +9,7 @@ var dbConnection = require('./dbConnection/dbConnection');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var chapter = require('./routes/chapter');
+var complexSchemas = require('./routes/complexSchemas');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/api/chapter', chapter);
+app.use('/api/complexSchemas', complexSchemas);
 
 
 // catch 404 and forward to error handler

@@ -1,0 +1,15 @@
+<h1>POPULATION</h1>
+<p>
+    <h3>References to documents in other collections. </h3>>
+    Population is the process of automatically replacing the specified paths in the document with document(s) from other collection(s). We may populate a single document, multiple documents, plain object, multiple plain objects, or all objects returned from a query.
+</p>
+<form ng-submit="ctrl.save()" ng-controller="PopulationController as ctrl" novalidate>
+    id: <input type="Number" ng-model="ctrl._id"/>
+    name: <input type="text" ng-model="ctrl.name"/>
+    age: <input type="Number" ng-model="ctrl.age"/>
+    title: <input type="text" ng-model="ctrl.title"/>
+    
+    <input type="submit" id="submit" value="Guardar"/>
+</form>
+
+<a ng-href="#/todos">Todos</a>
