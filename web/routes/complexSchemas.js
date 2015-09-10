@@ -1,3 +1,4 @@
+var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
 var personFactory = require('./../schemas/ch10/person'); 
@@ -5,61 +6,46 @@ var storyFactory = require('./../schemas/ch10/story');
 
 
 router.get('/population', function(req, res, next) {
-    res.send('index');
+    //$curl http://localhost:3000/api/complexSchemas/population
+    var Story = mongoose.model('Story');
+    
+    Story
+    .findOne({ title: 'Once upon a timex.' })
+    .populate('_creator')
+    .exec(function (err, story) {
+        if (err) return next(err);
+        console.log('The creator is %s', story._creator.name);
+        //prints 'The creator is Aaron'    
+    });
+    
 });
 
-
-router.post('/population', function(req, res, next) {  
-    var person = personFactory({ 
-        _id: req.body._id,
-        name: req.body.name,
+router.post('/population', function(req, res, next) {
+    //$ curl -i -H "Content-Type: application/json" -d  '{"name":"laura", "age": 12}' http://localhost:3000/api/complexSchemas/population
+    var aaron = personFactory({
+        name: req.body.name, 
         age: req.body.age
     });
     
-    person.save(function (err) {
-        if(err) return next(err);
+    aaron.save(function (err, person) {
+        if(err) return console.log(err);
+        
+        console.log(person);
+        console.log("persona guardada");
         
         var story1 = storyFactory({
-            title: req.body.title,
-            _creator: req.body._id //assign the _id from the person
+            title: "mi titulo2", 
+            _creator: aaron._id //assing the _id from the person
         });
         
-        story1.save(function (err) {
-            if(err) next(err);
-            //that's it!
-        });
-    });
-    res.json({success: true});
-});
-/*
-
-router.post('/population', function(req, res, next) {
-    var body = {
-        _id: 0, name: 'Aaron', age: 100, title: "Once upon a timex.", _creator: 0
-    };
-    var aaron = populationFactory(body).person({
-        //_id: 0, name: 'Aaron', age: 100
-        _id: 0, name: 'Aaron', age: 100
-        
-    });
-    
-    aaron.save(function (err) {
-        if(err) return next(err);
-        
-        var story1 = populationFactory.story({
-            //title: "Once upon a timex.", _creator: aaron._id //assing the _id from the person
+        story1.save(function (err, story) {
+            if(err) return console.log(err);
             
-        });
-        
-        story1.save(function (err) {
-            if(err) next(err);
+            console.log(story);
+            console.log('Story guardada y en _creator va el _id de person');
             //that's it!
         });
     });
-    
-    console.dir(aaron);
-    console.dir(story1);
-    res.json({success: true});
 });
-*/
+
 module.exports = router;

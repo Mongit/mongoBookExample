@@ -2,7 +2,6 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var personSchema = Schema({
-    _id: Number,//must be document _ids from the Story model
     name: String,
     age: Number,
     stories: [{//field that sets an array of objectIds

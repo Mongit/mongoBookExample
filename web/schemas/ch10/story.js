@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 
 var storySchema = Schema ({
     _creator: {//It's IMPORTANT to match the type of _id to the type of ref (property is Number as personSchema)
-        type: Number,
+        type: Schema.Types.ObjectId,
         ref: 'Person'
     },
     title: String,

@@ -1,6 +1,23 @@
 (function() {
     var app = angular.module('app');
     
+    app.controller('ComplexSchemasController', ['$http', '$location', function($http, $location) {
+        var ctrl = this;
+        ctrl.schemas = [];
+        
+        $http.get('/api/complexSchemas/population'). success(function(data) {
+            console.dir(data);
+            ctrl.schemas = data;
+        }).error(function(data, status, headers, config) {
+            console.log('%s %s %s', config.method, config.url, status);
+        });
+        
+    }]);
+})();
+
+(function() {
+    var app = angular.module('app');
+    
     app.controller('PopulationController', ['$http', '$location', function($http, $location) {
         var ctrl = this;
         ctrl._id = undefined;
@@ -15,7 +32,6 @@
                 method: "POST",
                 data: ctrl,
             }).success(function(data, status, headers, config) {
-                console.log("CREO QUE SE GUARDO EXITOSAMENTE");
                 $location.path('/todos');
             }).error(function(data, status, headers, config) {
                 console.log('%s %s %s', config.method, config.url, status);

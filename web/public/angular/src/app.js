@@ -19,6 +19,7 @@
                      { templateUrl: "angular/validatorsViews/example.html" })
         
         //CHAPTER 10
+        $router.when("/index", { templateUrl:                     "angular/complexSchemasViews/index.html" })
         $router.when("/population", { templateUrl: "angular/complexSchemasViews/population.html" })
         
         
