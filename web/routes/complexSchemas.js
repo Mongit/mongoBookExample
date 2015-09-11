@@ -8,12 +8,29 @@ var storyFactory = require('./../schemas/ch10/story');
 router.get('/population', function(req, res, next) {
     //$curl http://localhost:3000/api/complexSchemas/population
     var Story = mongoose.model('Story');
-    
+//You build a query, use the populate command, and then exec() when ready. This will populate with the entire user object.     
     Story
     .findOne({ title: 'Once upon a timex.' })
     .populate('_creator')
     .exec(function (err, story) {
         if (err) return next(err);
+        console.log(story);
+        console.log('The creator is %s', story._creator.name);
+        //prints 'The creator is Aaron'    
+    });
+    
+});
+
+router.get('/population2', function(req, res, next) {
+    //$curl http://localhost:3000/api/complexSchemas/population
+    var Story = mongoose.model('Story');
+//we can specify the individual paths that we require. In this case: name and age
+    Story
+    .findOne({ title: 'Once upon a timex.' })
+    .populate('_creator', 'name age')
+    .exec(function (err, story) {
+        if (err) return next(err);
+        console.log(story);
         console.log('The creator is %s', story._creator.name);
         //prints 'The creator is Aaron'    
     });
