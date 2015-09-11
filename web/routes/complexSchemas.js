@@ -54,7 +54,8 @@ router.post('/population', function(req, res, next) {
             title: "mi titulo2", 
             _creator: aaron._id //assing the _id from the person
         });
-        
+        story1.fans.push(aaron);
+        console.dir(story1.fans);
         story1.save(function (err, story) {
             if(err) return console.log(err);
             
@@ -63,6 +64,31 @@ router.post('/population', function(req, res, next) {
             //that's it!
         });
     });
+});
+
+router.get('/queryingAndOptions', function(req, res, next) {
+/*
+populate fans array based on their age, select just their names, return at most 5 of them
+    path: Is he path to populate. Is required.
+    match: Specify query conditions.
+    select: String/object specifying which paths to return.
+    options: Specify query options.
+*/
+    var Story = mongoose.model('Story');
+    //SOLO CON ARRAYS
+    Story
+    .find('jonas')
+    .populate({
+        path: 'fans',
+        match: { age: { $gte: 21 }},//$gte selects the documents where the value of the 'age' is greater than or equal to (>=) 21. 
+        select: 'name -_id',//-_id elimina el id de la vista
+        options: { limit: 1 }//numero de objs en array?
+    })
+    .exec(function (err, story) {
+        if (err) return next(err);
+        console.log(story);
+    });
+    
 });
 
 module.exports = router;
