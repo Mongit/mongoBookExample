@@ -5,6 +5,16 @@ var personFactory = require('./../schemas/ch10/person');
 var storyFactory = require('./../schemas/ch10/story'); 
 
 
+router.get('/showPerson', function(req, res, next) {
+    var Person = mongoose.model('Person');
+    
+    Person.find(function (err, persons) {
+        if (err) return next(err);
+        console.log(persons);
+    });
+    
+});
+
 router.get('/population', function(req, res, next) {
     //$curl http://localhost:3000/api/complexSchemas/population
     var Story = mongoose.model('Story');
@@ -43,7 +53,7 @@ router.post('/population', function(req, res, next) {
         name: req.body.name, 
         age: req.body.age
     });
-    
+        
     aaron.save(function (err, person) {
         if(err) return console.log(err);
         
@@ -54,8 +64,9 @@ router.post('/population', function(req, res, next) {
             title: "mi titulo2", 
             _creator: aaron._id //assing the _id from the person
         });
+        
         story1.fans.push(aaron);
-        console.dir(story1.fans);
+        
         story1.save(function (err, story) {
             if(err) return console.log(err);
             
@@ -89,6 +100,18 @@ populate fans array based on their age, select just their names, return at most 
         console.log(story);
     });
     
+});
+
+router.get('/refsToChildren', function(req, res, next) {
+    var Person = mongoose.model('Person');
+    
+    Person
+    .findOne({ name: 'Aaron' })
+    .populate('stories')
+    .exec(function (err, person) {
+        if(err) return console.log(err);
+        console.log(person);
+    });
 });
 
 module.exports = router;
