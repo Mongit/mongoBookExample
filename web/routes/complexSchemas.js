@@ -47,8 +47,7 @@ router.get('/population2', function(req, res, next) {
     
 });
 
-router.post('/person', function(req, res, next) {
-//$ curl -i -H "Content-Type: application/json" -d  '{"name":"laura", "age": 12}' http://localhost:3000/api/complexSchemas/population    
+router.post('/person', function(req, res, next) {   
     var aaron = personFactory({ name: req.body.name, age: req.body.age });
         
     aaron.save(function (err, person) {
@@ -60,6 +59,7 @@ router.post('/person', function(req, res, next) {
 });
 
 router.post('/story/:id', function(req, res, next) {
+    //curl -i -H "Content-Type: application/json" -d '{"title": "Juana title"}' http://localhost:3000/api/complexSchemas/story/55f6ec335d16fcf30391a9d6
     var Person = mongoose.model('Person');
     var id = req.params.id;
     
@@ -116,12 +116,24 @@ router.get('/refsToChildren', function(req, res, next) {
     var Person = mongoose.model('Person');
     
     Person
-    .findOne({ name: 'Aaron' })
+    .findOne({ name: 'Juana' })
     .populate('stories')
     .exec(function (err, person) {
         if(err) return console.log(err);
         console.log(person);
     });
+});
+
+router.get('/findStories/:id', function(req, res, next) {
+    //we could skip populating and directly find() the stories we are interested in.
+    var Story = mongoose.model('Story');
+    
+    Story
+    .find({ _creator: req.params.id })
+    .exec(function(err, stories) {
+        if(err) return console.log(err);
+        console.log('The stories are an array: ', stories);
+    })
 });
 
 module.exports = router;
