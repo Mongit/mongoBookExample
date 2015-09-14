@@ -47,33 +47,43 @@ router.get('/population2', function(req, res, next) {
     
 });
 
-router.post('/population', function(req, res, next) {
-    //$ curl -i -H "Content-Type: application/json" -d  '{"name":"laura", "age": 12}' http://localhost:3000/api/complexSchemas/population
-    var aaron = personFactory({
-        name: req.body.name, 
-        age: req.body.age
-    });
+router.post('/person', function(req, res, next) {
+//$ curl -i -H "Content-Type: application/json" -d  '{"name":"laura", "age": 12}' http://localhost:3000/api/complexSchemas/population    
+    var aaron = personFactory({ name: req.body.name, age: req.body.age });
         
     aaron.save(function (err, person) {
         if(err) return console.log(err);
         
         console.log(person);
         console.log("persona guardada");
+    });
+});
+
+router.post('/story/:id', function(req, res, next) {
+    var Person = mongoose.model('Person');
+    var id = req.params.id;
+    
+    Person.findById(id, function (err, found) {
+        if (err) return console.log(err);
         
-        var story1 = storyFactory({
-            title: "mi titulo2", 
-            _creator: aaron._id //assing the _id from the person
-        });
-        
-        story1.fans.push(aaron);
-        
+        var story1 = storyFactory({ 
+            title: req.body.title, 
+            _creator: id });
+    
+        story1.fans.push(found);
+
         story1.save(function (err, story) {
-            if(err) return console.log(err);
-            
-            console.log(story);
-            console.log('Story guardada y en _creator va el _id de person');
-            //that's it!
+            if(err) return console.log(err);    
+                console.log(story);
+                console.log('Story guardada y en _creator va el _id de person');
         });
+        
+        found.stories.push(story1);
+        found.save(function(err, per) {
+            if(err)  return console.log(err);
+            console.log("Story en persona guardada " + per);
+        });
+        
     });
 });
 
