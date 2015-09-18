@@ -67,7 +67,7 @@ router.post('/nuevaPerson', function(req, res, next) {
     });
 });
 
-router.post('/creaGuardaStory/:id', function(req, res, next) {
+router.post('/creaGuardaStory/:id', function(req, res, next) {//id de persona juana
     //curl -i -H "Content-Type: application/json" -d '{"title": "Juana title"}' http://localhost:3000/api/complexSchemas/story/55f6ec335d16fcf30391a9d6
     var Person = mongoose.model('Person');
     var id = req.params.id;
@@ -142,8 +142,6 @@ router.get('/findStories/:id', function(req, res, next) {//person id
     .exec(function(err, stories) {
         if(err) return console.log(err);
         console.log('The stories are an array: ', stories);
-        //var thisStory = stories.id(55f6ec335d16fcf30391a9d6);
-        //console.log(thisStory);
     });
 });
 
@@ -184,7 +182,7 @@ router.get('/updatingRefs/:id', function(req, res, next) {
 });
 
 
-router.get('/getOne/:id', function(req, res, next) {//id de la story
+router.get('/getOne/:id', function(req, res, next) {//id de la story 'juana title'
 //curl http://localhost:3000/api/complexSchemas/getOne/55f6ecda24e5e61c0548a9fc
 
     var Story = mongoose.model('Story');
@@ -194,8 +192,7 @@ router.get('/getOne/:id', function(req, res, next) {//id de la story
     .populate('_creator')
     .exec(function (err, story) {
         if (err) return console.log("Oh you poor thing" + err);
-        console.log(story);
-        console.log('The creator is %s', story);  
+        console.log('The creator is %s', story._creator.name);  
     });
     
 });
