@@ -54,7 +54,6 @@ router.get('/addTask/:projectId', function(req, res, next) {
    });
 });
 
-
 router.get('/specificSubdoc/:projectId/task/show/:taskId', function(req, res, next) { 
     var Project = mongoose.model('Project');
     //curl http://localhost:3000/api/projectTask/specificSubdoc/55fc2076a4d7df1f343ba5ef/task/show/55fc2076a4d7df1f343ba5f0
@@ -63,6 +62,21 @@ router.get('/specificSubdoc/:projectId/task/show/:taskId', function(req, res, ne
             console.log(project.task); //aray of tasks
             var thisTask = project.task.id(req.params.taskId);
             console.log('This task: ' + thisTask);//individual task document
+        }     
+    });
+});
+
+//when you want to edit or delete a specific subdocument, you need to know the _id of the parent document and the _id of the subdocument
+router.get('/deleteSubdoc/:projectId/task/delete/:taskId', function(req, res, next) { 
+    var Project = mongoose.model('Project');
+    Project.findById(req.params.projectId, function(err, project){
+        if(!err) {
+            console.log("before deleted project.task: " + project.task);      
+            var thisTask = project.task.id(req.params.taskId).remove();
+            project.save(function(err, project) {
+                if (err) return console.log("UPS! " + err);
+                console.log("Your subdoc has been deleted successfully " + project.task);
+            });
         }     
     });
 });
